@@ -1,8 +1,17 @@
+---
+title: "Geolocalisation des villes de EMDAT"
+output: pdf_document
+date: "2024-01-16"
+---
+# Utilisation d'une API pour géocoder
+La documentation de l'API est ici : https://operations.osmfoundation.org/policies/nominatim/
 
-#API pour géocoder : https://operations.osmfoundation.org/policies/nominatim/
-
+```{r }
 library(httr)
 library(jsonlite)
+```
+
+
 response <- GET("https://nominatim.openstreetmap.org/search?q=Paris&format=json",
                        add_headers(`User-Agent` = "test 1"))
 
