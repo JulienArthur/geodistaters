@@ -1,0 +1,48 @@
+
+#API pour géocoder : https://operations.osmfoundation.org/policies/nominatim/
+
+library(httr)
+library(jsonlite)
+response <- GET("https://nominatim.openstreetmap.org/search?q=Paris&format=json",
+                       add_headers(`User-Agent` = "test 1"))
+
+data <- fromJSON(content(response, "text"))
+
+
+library(httr)
+library(jsonlite)
+library(dplyr)
+
+# Par exemple à remplacer par la base de données:
+df <- data.frame(location = c("Paris", "Berlin", "Rome"))
+
+# Fonction pour récupérer les coordonnées d'une localisation
+get_coordinates <- function(location) {
+  response <- GET(paste0("https://nominatim.openstreetmap.org/search?q=", URLencode(location), "&format=json"),
+                  add_headers(`User-Agent` = "MonApplication/1.0 (email@example.com)"))
+  
+  if (status_code(response) == 200) {
+    data <- fromJSON(content(response, "text"))
+    if (length(data) > 0) {
+      return(c(data$lat[1], data$lon[1]))
+    }
+  }
+  return(c(NA, NA))
+}
+
+# Initialiser les colonnes de latitude et longitude
+df$latitude <- NA
+df$longitude <- NA
+
+# Boucle sur chaque localisation
+for (i in 1:nrow(df)) {
+  coords <- get_coordinates(df$location[i])
+  df$latitude[i] <- coords[1]
+  df$longitude[i] <- coords[2]
+  
+  # Pause d'une seconde entre chaque requête
+  Sys.sleep(1)
+}
+
+# Afficher le dataframe avec les nouvelles colonnes
+print(df)
