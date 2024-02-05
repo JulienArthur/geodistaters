@@ -45,7 +45,7 @@ df$longitude <- NA
 
 # Boucle sur chaque localisation
 for (i in 1:nrow(df)) {
-  coords <- get_coordinates(df$location[i])
+  coords <- get_coordinates(df$Location[i])
   df$latitude[i] <- coords[1]
   df$longitude[i] <- coords[2]
   
