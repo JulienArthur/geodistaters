@@ -25,7 +25,7 @@ library(dplyr)
 # Fonction pour récupérer les coordonnées d'une localisation
 get_coordinates <- function(location) {
   response <- GET(paste0("https://nominatim.openstreetmap.org/search?q=", URLencode(location), "&format=json"),
-                  add_headers(`User-Agent` = "MonApplication/1.0 (email@example.com)"))
+                  add_headers(`User-Agent` = "test 1"))
   
   if (status_code(response) == 200) {
     data <- fromJSON(content(response, "text"))
