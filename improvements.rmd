@@ -22,9 +22,6 @@ library(httr)
 library(jsonlite)
 library(dplyr)
 
-# Par exemple à remplacer par la base de données:
-df <- data.frame(location = c("Paris", "Berlin", "Rome"))
-
 # Fonction pour récupérer les coordonnées d'une localisation
 get_coordinates <- function(location) {
   response <- GET(paste0("https://nominatim.openstreetmap.org/search?q=", URLencode(location), "&format=json"),
